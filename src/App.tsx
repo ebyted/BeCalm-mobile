@@ -7,8 +7,8 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import AppNavigator from './src/navigation/AppNavigator';
-import { Colors } from './src/styles/theme';
+import AppNavigator from './navigation/AppNavigator';
+import { Colors } from './styles/theme';
 
 const App: React.FC = () => {
   return (

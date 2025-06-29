@@ -5,16 +5,20 @@ import { StyleSheet, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
 export const Colors = {
-  // Colores principales - Paleta BeCalm original
+  // Colores principales - Paleta BeCalm actualizada
   primary: '#8fbc8f',        // Verde oliva claro
   primaryDark: '#6b8e6b',    // Verde oliva más oscuro
+  primaryLight: '#a4c9a4',   // Verde oliva muy claro
   secondary: '#d2b48c',      // Café claro/beige
+  secondaryDark: '#c4a484',  // Café más oscuro
   accent: '#a0a0a0',         // Gris medio
+  accentLight: '#b8b8b8',    // Gris claro
+  accentDark: '#808080',     // Gris oscuro
   
   // Backgrounds
   background: '#f5f5f0',     // Blanco cremoso
   backgroundLight: '#ffffff', // Blanco puro
-  backgroundCard: 'rgba(143, 188, 143, 0.1)', // Verde oliva muy transparente
+  backgroundCard: 'rgba(143, 188, 143, 0.08)', // Verde oliva muy transparente
   
   // Text colors
   textPrimary: '#2f2f2f',    // Gris oscuro para texto principal
@@ -29,8 +33,8 @@ export const Colors = {
   info: '#87ceeb',           // Azul suave que combina
   
   // Glass effect
-  glassBackground: 'rgba(143, 188, 143, 0.1)', // Verde oliva transparente
-  glassBorder: 'rgba(143, 188, 143, 0.3)',     // Verde oliva para bordes
+  glassBackground: 'rgba(143, 188, 143, 0.08)', // Verde oliva transparente
+  glassBorder: 'rgba(107, 142, 107, 0.3)',      // Verde oliva oscuro para bordes
   
   // Shadows
   shadowColor: '#8fbc8f',    // Sombras en verde oliva suave
@@ -215,38 +219,56 @@ export const GlobalStyles = StyleSheet.create({
   // Navigation
   tabBarStyle: {
     backgroundColor: Colors.backgroundLight,
-    borderTopColor: Colors.glassBorder,
-    borderTopWidth: 1,
+    borderTopColor: Colors.primaryDark,
+    borderTopWidth: 2,
     paddingBottom: 8,
     paddingTop: 8,
     height: 70,
+    shadowColor: Colors.primary,
+    shadowOffset: {
+      width: 0,
+      height: -2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 8,
   },
   
   // Menu items
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.glassBackground,
+    backgroundColor: Colors.backgroundLight,
     borderRadius: BorderRadius.lg,
     padding: Spacing.md,
     marginVertical: Spacing.xs,
     borderWidth: 1,
-    borderColor: Colors.glassBorder,
+    borderColor: Colors.primaryDark,
+    shadowColor: Colors.primary,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   
   menuItemIcon: {
-    width: 40,
-    height: 40,
+    width: 45,
+    height: 45,
     marginRight: Spacing.md,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: BorderRadius.md,
+    borderWidth: 1,
+    borderColor: Colors.glassBorder,
   },
   
   menuItemText: {
-    fontSize: Fonts.medium,
+    fontSize: Fonts.large,
     color: Colors.textPrimary,
-    fontWeight: '500',
+    fontWeight: '600',
     flex: 1,
   },
   
@@ -271,11 +293,13 @@ export const GlobalStyles = StyleSheet.create({
 });
 
 export const Gradients = {
-  primary: ['#8fbc8f', '#6b8e6b'],                    // Verde oliva claro a oscuro
-  secondary: ['#d2b48c', '#c4a484'],                  // Café claro a más intenso
-  background: ['#f5f5f0', '#ffffff'],                 // Crema a blanco
-  card: ['rgba(143, 188, 143, 0.1)', 'rgba(143, 188, 143, 0.05)'], // Verde oliva muy suave
-  accent: ['#a0a0a0', '#8a8a8a'],                     // Gris medio a oscuro
+  primary: [Colors.primaryLight, Colors.primary],          // Verde oliva muy claro a claro
+  primaryDark: [Colors.primary, Colors.primaryDark],       // Verde oliva claro a oscuro
+  secondary: [Colors.secondary, Colors.secondaryDark],      // Café claro a más intenso
+  background: [Colors.background, Colors.backgroundLight], // Crema a blanco
+  card: [Colors.backgroundCard, 'rgba(143, 188, 143, 0.02)'], // Verde oliva muy suave
+  accent: [Colors.accentLight, Colors.accent],             // Gris claro a medio
+  glass: ['rgba(255, 255, 255, 0.9)', 'rgba(245, 245, 240, 0.8)'], // Efecto cristal
 };
 
 export { width as screenWidth, height as screenHeight };

@@ -38,49 +38,49 @@ const MainMenuScreen: React.FC<Props> = ({ navigation }) => {
       path: 'DialogoSagrado',
       icon: '🕊️',
       emoji: '🕊️',
-      color: '#6366f1'
+      color: Colors.primary
     },
     {
       name: 'Diario Vivo',
       path: 'DiarioVivo',
       icon: '📖',
       emoji: '📖',
-      color: '#a855f7'
+      color: Colors.secondary
     },
     {
       name: 'Medita Conmigo',
       path: 'MeditaConmigo',
       icon: '🧘‍♀️',
       emoji: '🧘‍♀️',
-      color: '#ec4899'
+      color: Colors.accent
     },
     {
       name: 'Mensajes del Alma',
       path: 'MensajesDelAlma',
       icon: '💌',
       emoji: '💌',
-      color: '#10b981'
+      color: Colors.primary
     },
     {
       name: 'Ritual Diario',
       path: 'RitualDiario',
       icon: '🌅',
       emoji: '🌅',
-      color: '#f59e0b'
+      color: Colors.secondary
     },
     {
       name: 'Mapa Interior',
       path: 'MapaInterior',
       icon: '🗺️',
       emoji: '🗺️',
-      color: '#3b82f6'
+      color: Colors.accent
     },
     {
       name: 'Silencio Sagrado',
       path: 'SilencioSagrado',
       icon: '🤫',
       emoji: '🤫',
-      color: '#8b5cf6'
+      color: Colors.primary
     }
   ];
 
@@ -106,12 +106,13 @@ const MainMenuScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const navigateToScreen = (screenName: keyof RootStackParamList) => {
-    if (screenName === 'DialogoSagrado' || screenName === 'DiarioVivo' || screenName === 'MeditaConmigo') {
-      // Estas pantallas están en el tab navigator
-      navigation.navigate(screenName as any);
-    } else {
-      // Estas pantallas son stack screens
+    try {
+      // Todas las pantallas están disponibles como stack screens
       navigation.navigate(screenName);
+    } catch (error) {
+      console.warn('Error navegando a la pantalla:', screenName, error);
+      // Fallback: intentar navegar de otra manera si hay problemas
+      navigation.push(screenName as any);
     }
   };
 
@@ -164,8 +165,12 @@ const MainMenuScreen: React.FC<Props> = ({ navigation }) => {
                   {item.name}
                 </Text>
                 
-                <Text style={{ fontSize: 16, color: Colors.textMuted }}>
-                  ➤
+                <Text style={{ 
+                  fontSize: 18, 
+                  color: Colors.primaryDark,
+                  fontWeight: 'bold' 
+                }}>
+                  ❯
                 </Text>
               </LinearGradient>
             </TouchableOpacity>

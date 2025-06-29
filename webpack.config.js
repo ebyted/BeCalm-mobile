@@ -1,6 +1,13 @@
 const path = require('path');
 
 module.exports = {
+  entry: './src/index.web.js',
+  mode: 'development',
+  devServer: {
+    static: './public',
+    port: 3000,
+    historyApiFallback: true,
+  },
   resolve: {
     alias: {
       'react-native$': 'react-native-web',
@@ -29,6 +36,15 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
+  },
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
   },
 };

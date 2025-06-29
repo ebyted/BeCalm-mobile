@@ -13,12 +13,15 @@ interface TabBarIconProps {
 // Mapa de iconos con emojis espirituales y de bienestar
 const iconMap: { [key: string]: string } = {
   home: '🏠',
+  'message-circle': '🕊️',
+  book: '📖',
+  heart: '🧘‍♀️',
   'dialogo-sagrado': '🕊️',
   'diario-vivo': '📖',
   'medita-conmigo': '🧘‍♀️',
   'mensajes-alma': '💌',
   'ritual-diario': '🌸',
-  'mapa-interior': '�️',
+  'mapa-interior': '🗺️',
   'silencio-sagrado': '🌙',
   music: '🎵',
   star: '⭐',
@@ -26,7 +29,7 @@ const iconMap: { [key: string]: string } = {
   user: '👤',
 };
 
-const TabBarIcon: React.FC<TabBarIconProps> = ({ name, focused, color }) => {
+const TabBarIcon: React.FC<TabBarIconProps> = ({ name, focused, color: _color }) => {
   return (
     <View style={{
       alignItems: 'center',
@@ -34,9 +37,9 @@ const TabBarIcon: React.FC<TabBarIconProps> = ({ name, focused, color }) => {
       width: 32,
       height: 32,
       borderRadius: 16,
-      backgroundColor: focused ? `${color}20` : 'transparent',
+      backgroundColor: focused ? `${Colors.primary}20` : 'transparent',
       borderWidth: focused ? 1 : 0,
-      borderColor: focused ? `${color}40` : 'transparent',
+      borderColor: focused ? `${Colors.primary}40` : 'transparent',
     }}>
       <Text style={{
         fontSize: focused ? 22 : 18,
@@ -44,7 +47,7 @@ const TabBarIcon: React.FC<TabBarIconProps> = ({ name, focused, color }) => {
         textShadowOffset: { width: 0, height: 1 },
         textShadowRadius: focused ? 2 : 0,
       }}>
-        {iconMap[name] || '�'}
+        {iconMap[name] || '❓'}
       </Text>
     </View>
   );

@@ -35,12 +35,16 @@ const TabNavigator = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: GlobalStyles.tabBarStyle,
-        tabBarActiveTintColor: Colors.primary,
-        tabBarInactiveTintColor: Colors.textMuted,
+        tabBarActiveTintColor: Colors.primaryDark,
+        tabBarInactiveTintColor: Colors.accent,
         headerShown: false,
         tabBarLabelStyle: {
-          fontSize: 10,
-          fontWeight: '500',
+          fontSize: 11,
+          fontWeight: '600',
+          marginBottom: 2,
+        },
+        tabBarIconStyle: {
+          marginTop: 2,
         },
       }}
     >

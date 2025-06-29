@@ -17,13 +17,13 @@ RUN apk add --no-cache \
 COPY package*.json ./
 
 # Instalar dependencias
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 # Copiar el código fuente
 COPY . .
 
-# Crear versión web de React Native
-RUN npm run build:web
+# Crear versión web simplificada
+RUN npm run build:web:simple
 
 # Etapa de producción
 FROM nginx:alpine
@@ -32,7 +32,7 @@ FROM nginx:alpine
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copiar los archivos construidos desde la etapa anterior
-COPY --from=builder /app/build /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Exponer el puerto 8015
 EXPOSE 8015
