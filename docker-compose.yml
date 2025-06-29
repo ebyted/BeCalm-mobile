@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  becalm-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: becalm-app
+    ports:
+      - "8015:8015"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    networks:
+      - becalm-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.becalm.rule=PathPrefix(`/`)"
+      - "traefik.http.services.becalm.loadbalancer.server.port=8015"
+
+networks:
+  becalm-network:
+    driver: bridge

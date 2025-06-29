@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+    ".dockerignore": "ignore",
+    "Dockerfile": "dockerfile"
+  },
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "eslint.workingDirectories": ["src"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
+}
