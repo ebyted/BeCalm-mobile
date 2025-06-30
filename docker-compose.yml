@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: becalm-app
+    container_name: becalm-web
     ports:
       - "8015:8015"
     restart: unless-stopped
