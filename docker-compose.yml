@@ -1,11 +1,11 @@
 version: '3.8'
 
 services:
-  becalm-mobile:
+  becalm-web:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: becalm-mobile
+    container_name: becalm-web
     ports:
       - "8015:8015"
     restart: unless-stopped

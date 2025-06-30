@@ -1,41 +1,32 @@
-# Dockerfile para BeCalm - React Native Web
-# Optimizado para producción con Node.js 18
+# Etapa 1: Build web
+FROM node:18-alpine AS builder
 
-FROM node:18-alpine as builder
-
-# Establecer directorio de trabajo
 WORKDIR /app
 
-# Instalar dependencias del sistema necesarias para React Native
-RUN apk add --no-cache \
-    python3 \
-    make \
-    g++ \
-    git
+# Dependencias necesarias para React Native Web
+RUN apk add --no-cache python3 make g++ git
 
-# Copiar package.json y package-lock.json
+# Copiar dependencias
 COPY package*.json ./
 
-# Instalar dependencias
+# Instalar dependencias (legacy-peer-deps si tienes dependencias complicadas)
 RUN npm ci --legacy-peer-deps
 
-# Copiar el código fuente
+# Copiar todo el código
 COPY . .
 
-# Crear versión web simplificada
-RUN npm run build:web:simple
+# Compilar solo la versión web
+RUN npm run build:web:simple  # <-- asegúrate que este script exista
 
-# Etapa de producción
+# Etapa 2: Servir con Nginx
 FROM nginx:alpine
 
-# Copiar configuración personalizada de nginx
+# Copiar configuración nginx
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Copiar los archivos construidos desde la etapa anterior
+# Cambia esta línea si tu build genera otra carpeta (como build/ o web-build/)
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Exponer el puerto 8015
 EXPOSE 8015
 
-# Comando para iniciar nginx
 CMD ["nginx", "-g", "daemon off;"]
