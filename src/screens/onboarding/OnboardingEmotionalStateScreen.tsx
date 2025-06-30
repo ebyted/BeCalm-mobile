@@ -51,7 +51,7 @@ const OnboardingEmotionalStateScreen: React.FC<Props> = ({ navigation }) => {
       <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
       <SafeAreaView style={GlobalStyles.container}>
         <View style={{ flex: 1, justifyContent: 'center', padding: Spacing.lg }}>
-          <Text style={[Fonts.h2, { color: Colors.textOnPrimary, textAlign: 'center', marginBottom: Spacing.sm }]}>
+          <Text style={[Fonts.h2, { color: Colors.textPrimary, textAlign: 'center', marginBottom: Spacing.sm }]}>
             ¿Cómo te sientes hoy?
           </Text>
           <Text style={[Fonts.body, {  color: Colors.textOnPrimary, textAlign: 'center', marginBottom: Spacing.xl }]}>
