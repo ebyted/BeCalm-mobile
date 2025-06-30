@@ -15,6 +15,8 @@ interface CustomInputProps {
   error?: string;
   disabled?: boolean;
   icon?: string;
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
+  pointerEvents?: 'none' | 'auto' | 'box-none' | 'box-only';
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
@@ -27,13 +29,15 @@ const CustomInput: React.FC<CustomInputProps> = ({
   numberOfLines = 1,
   error,
   disabled = false,
-  icon
+  icon,
+  autoCapitalize = 'sentences',
+  pointerEvents,
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const isPassword = secureTextEntry;
 
   return (
-    <View style={{ marginBottom: 16 }}>
+    <View style={{ marginBottom: 16 }} pointerEvents={pointerEvents}>
       {label && (
         <Text style={GlobalStyles.inputLabel}>
           {icon && <Text style={{ fontSize: 16, marginRight: 8 }}>{icon}</Text>}
@@ -51,6 +55,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
           multiline={multiline}
           numberOfLines={numberOfLines}
           editable={!disabled}
+          autoCapitalize={autoCapitalize}
           style={[
             GlobalStyles.input,
             {

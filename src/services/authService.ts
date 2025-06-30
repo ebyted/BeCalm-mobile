@@ -14,10 +14,34 @@ class AuthService {
     return AuthService.instance;
   }
 
+  // Método demoLogin para modo demo cuando el backend no está disponible
+  private demoLogin(credentials: LoginCredentials): AuthResponse {
+    // Puedes personalizar los datos de respuesta demo según tus necesidades
+    if (credentials.username === 'demo' && credentials.password === 'demo') {
+      return {
+        access_token: 'demo-token',
+        token_type: 'bearer',
+        user: {
+          id: 1,
+          username: 'demo',
+          full_name: 'Demo User',
+        } as User,
+      };
+    } else {
+      throw new Error('Usuario o contraseña incorrectos (modo demo)');
+    }
+  }
+
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     try {
-      // Asegurar que tengamos un backend funcional
-      await this.checkHealth();
+      // Verificar si el backend está disponible
+      const isHealthy = await this.checkHealth();
+      
+      if (!isHealthy) {
+        // Modo demo cuando el servidor no está disponible
+        console.log('🔄 Servidor no disponible, iniciando modo demo...');
+        return this.demoLogin(credentials);
+      }
       
       const formData = new URLSearchParams();
       formData.append('username', credentials.username);
@@ -131,6 +155,9 @@ class AuthService {
     
     return headers;
   }
+
+  // Modo demo cuando el servidor no está disponible
+  
 
   async checkHealth(): Promise<boolean> {
     try {

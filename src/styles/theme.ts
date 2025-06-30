@@ -267,7 +267,7 @@ export const GlobalStyles = StyleSheet.create({
   
   menuItemText: {
     fontSize: Fonts.large,
-    color: Colors.textPrimary,
+    color: Colors.textOnPrimary, // Cambia a blanco para mejor contraste
     fontWeight: '600',
     flex: 1,
   },

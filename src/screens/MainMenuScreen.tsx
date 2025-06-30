@@ -7,7 +7,8 @@ import {
   ScrollView,
   TouchableOpacity,
   StatusBar,
-  Alert
+  Alert,
+  Image
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
@@ -24,6 +25,14 @@ import { RootStackParamList, MenuItem } from '../types';
 // Styles
 import { GlobalStyles, Colors, Gradients, Spacing } from '../styles/theme';
 
+import iconDialogo from './assets/icon-dialogo.png';
+import iconDiario from './assets/icon-diario.png';
+import iconMapa from './assets/icon-mapa.png';
+import iconMedita from './assets/icon-medita.png';
+import iconMensajes from './assets/icon-mensajes.png';
+import iconRitual from './assets/icon-ritual.png';
+import iconSilencio from './assets/icon-silencio.png';
+
 type MainMenuNavigationProp = StackNavigationProp<RootStackParamList>;
 
 interface Props {
@@ -34,55 +43,73 @@ const MainMenuScreen: React.FC<Props> = ({ navigation }) => {
 
   const menuItems: MenuItem[] = [
     {
-      name: 'Diálogo Sagrado',
+      name: 'Diálogo Conmigo',
       path: 'DialogoSagrado',
       icon: '🕊️',
       emoji: '🕊️',
-      color: Colors.primary
+      color: Colors.primary,
+      iconAsset: 'icon-dialogo.png',
     },
     {
       name: 'Diario Vivo',
       path: 'DiarioVivo',
       icon: '📖',
       emoji: '📖',
-      color: Colors.secondary
+      color: Colors.secondary,
+      iconAsset: 'icon-diario.png',
     },
     {
       name: 'Medita Conmigo',
       path: 'MeditaConmigo',
       icon: '🧘‍♀️',
       emoji: '🧘‍♀️',
-      color: Colors.accent
+      color: Colors.accent,
+      iconAsset: 'icon-medita.png',
     },
     {
       name: 'Mensajes del Alma',
       path: 'MensajesDelAlma',
       icon: '💌',
       emoji: '💌',
-      color: Colors.primary
+      color: Colors.primary,
+      iconAsset: 'icon-mensajes.png',
     },
     {
       name: 'Ritual Diario',
       path: 'RitualDiario',
-      icon: '🌅',
-      emoji: '🌅',
-      color: Colors.secondary
+      icon: '📅',
+      emoji: '📅',
+      color: Colors.accent,
+      iconAsset: 'icon-ritual.png',
     },
     {
       name: 'Mapa Interior',
       path: 'MapaInterior',
       icon: '🗺️',
       emoji: '🗺️',
-      color: Colors.accent
+      color: Colors.accent,
+      iconAsset: 'icon-mapa.png',
     },
     {
       name: 'Silencio Sagrado',
       path: 'SilencioSagrado',
       icon: '🤫',
       emoji: '🤫',
-      color: Colors.primary
+      color: Colors.primary,
+      iconAsset: 'icon-silencio.png',
     }
   ];
+
+  // Mapeo de iconos para evitar problemas con require dinámico
+  const iconMap: Record<string, any> = {
+    'icon-dialogo.png': iconDialogo,
+    'icon-diario.png': iconDiario,
+    'icon-medita.png': iconMedita,
+    'icon-mensajes.png': iconMensajes,
+    'icon-ritual.png': iconRitual,
+    'icon-mapa.png': iconMapa,
+    'icon-silencio.png': iconSilencio,
+  };
 
   const handleLogout = () => {
     Alert.alert(
@@ -156,9 +183,16 @@ const MainMenuScreen: React.FC<Props> = ({ navigation }) => {
               >
                 <View style={[
                   GlobalStyles.menuItemIcon,
-                  { backgroundColor: item.color + '20' }
+                  { backgroundColor: item.color + '20', alignItems: 'center', justifyContent: 'center', borderRadius: 12, width: 48, height: 48 }
                 ]}>
-                  <Text style={{ fontSize: 24 }}>{item.emoji}</Text>
+                  {item.iconAsset ? (
+                    <Image
+                      source={iconMap[item.iconAsset]}
+                      style={{ width: 36, height: 36, resizeMode: 'contain' }}
+                    />
+                  ) : (
+                    <Text style={{ fontSize: 24 }}>{item.emoji}</Text>
+                  )}
                 </View>
                 
                 <Text style={GlobalStyles.menuItemText}>

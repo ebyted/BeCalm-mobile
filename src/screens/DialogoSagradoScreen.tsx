@@ -169,7 +169,7 @@ const DialogoSagradoScreen: React.FC = () => {
           <View style={{ alignItems: 'center' }}>
             <Text style={{ fontSize: 40, marginBottom: Spacing.xs }}>🕊️</Text>
             <Text style={[GlobalStyles.subtitle, { textAlign: 'center' }]}>
-              Diálogo Sagrado
+              Diálogo Conmigo
             </Text>
             <Text style={[GlobalStyles.caption, { textAlign: 'center', opacity: 0.8 }]}>
               Comparte tus pensamientos y recibe sabiduría interior

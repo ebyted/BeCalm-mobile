@@ -22,7 +22,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import authService from '../services/authService';
 
 // Types
-import { RootStackParamList } from '../types';
+import { RootStackParamList } from '../navigation/types'; // Corrected import path
 
 // Styles
 import { GlobalStyles, Colors, Gradients, Spacing } from '../styles/theme';
@@ -51,7 +51,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
     try {
       const isAuthenticated = await authService.isAuthenticated();
       if (isAuthenticated) {
-        navigation.replace('Main');
+        navigation.replace('Main', { screen: 'MainTabs', params: { screen: 'MainMenu' } });
         return;
       }
     } catch (error) {
@@ -79,10 +79,24 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
       });
       
       Alert.alert('¡Bienvenido!', 'Has iniciado sesión exitosamente', [
-        { text: 'OK', onPress: () => navigation.replace('Main') }
+        { text: 'OK', onPress: () => navigation.replace('Main', { screen: 'MainTabs', params: { screen: 'MainMenu' } }) }
       ]);
     } catch (error) {
       Alert.alert('Error', error instanceof Error ? error.message : 'Error al iniciar sesión');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDemoLogin = async () => {
+    setLoading(true);
+    try {
+      await authService.login({ username: 'demo', password: 'demo' });
+      Alert.alert('Modo Demo', 'Has iniciado sesión en modo de demostración.', [
+        { text: 'OK', onPress: () => navigation.replace('Main', { screen: 'MainTabs', params: { screen: 'MainMenu' } }) },
+      ]);
+    } catch (error) {
+      Alert.alert('Error', error instanceof Error ? error.message : 'No se pudo iniciar el modo demo.');
     } finally {
       setLoading(false);
     }
@@ -198,6 +212,12 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                   variant="gradient"
                   loading={loading}
                   style={{ marginTop: Spacing.md }}
+                />
+                <CustomButton
+                  title="Entrar como Demo"
+                  onPress={handleDemoLogin}
+                  variant="secondary"
+                  style={{ marginTop: Spacing.sm }}
                 />
               </>
             ) : (

@@ -21,6 +21,7 @@ export interface RegisterData {
 export interface AuthResponse {
   access_token: string;
   token_type: string;
+  user?: User;
 }
 
 export interface GenerateRequest {
@@ -76,7 +77,8 @@ export type RootStackParamList = {
 export type MenuItem = {
   name: string;
   path: keyof RootStackParamList;
-  icon: string;
+  icon: string; // emoji o nombre de asset
   emoji: string;
   color: string;
+  iconAsset?: string; // nombre del asset en assets/
 };
