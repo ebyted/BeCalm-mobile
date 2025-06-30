@@ -45,15 +45,15 @@ const OnboardingIntentionScreen: React.FC<Props> = ({ navigation }) => {
     <LinearGradient colors={Gradients.background} style={{ flex: 1 }}>
       <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
       <SafeAreaView style={GlobalStyles.container}>
-        <View style={{ flex: 1, justifyContent: 'center', padding: Spacing.lg }}>
-          <Text style={[Fonts.h2, { textAlign: 'center', marginBottom: Spacing.sm }]}>
-            ¿Qué buscas en este momento?
-          </Text>
-          <Text style={[Fonts.body, { textAlign: 'center', marginBottom: Spacing.xl }]}>
-            Tu intención guía la experiencia. Elige la que más te llame.
-          </Text>
-          
-          <View style={{ alignItems: 'center' }}>
+      <View style={{ flex: 1, justifyContent: 'center', padding: Spacing.lg }}>
+        <Text style={[Fonts.h2, { textAlign: 'center', marginBottom: Spacing.sm }]}>
+        ¿Qué buscas en este momento?
+        </Text>
+        <Text style={[Fonts.body, { textAlign: 'center', marginBottom: Spacing.xl }]}>
+        Tu intención guía la experiencia. Elige la que más te llame.
+        </Text>
+        
+        <View style={{ alignItems: 'center' }}>
             {INTENTIONS.map(intention => (
               <CustomButton
                 key={intention}
@@ -66,11 +66,11 @@ const OnboardingIntentionScreen: React.FC<Props> = ({ navigation }) => {
                   borderColor: Colors.primary,
                   borderWidth: 1,
                   borderRadius: 12,
+                    // textcolor = blanco
+                    // No action needed here; text color is set in textStyle below.
                 }}
                 textStyle={{
-                  color: selectedIntention === intention ? Colors.background : Colors.primary,
-                  fontWeight: '600',
-                  fontSize: 16,
+                  color: selectedIntention === intention ? Colors.background : Colors.textOnPrimary
                 }}
               />
             ))}
