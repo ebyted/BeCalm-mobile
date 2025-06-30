@@ -45,19 +45,17 @@ const OnboardingEmotionalStateScreen: React.FC<Props> = ({ navigation }) => {
       setLoading(false);
     }
   };
-
   return (
     <LinearGradient colors={['#1a2a3a', '#000']} style={{ flex: 1 }}>
-      <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
+      <StatusBar barStyle="light-content" backgroundColor="#1a2a3a" />
       <SafeAreaView style={GlobalStyles.container}>
         <View style={{ flex: 1, justifyContent: 'center', padding: Spacing.lg }}>
-          <Text style={[Fonts.h2, { color: Colors.textOnPrimary, textAlign: 'center', marginBottom: Spacing.sm }]}>
+          <Text style={[Fonts.h2, { color: '#556B2F', textAlign: 'center', marginBottom: Spacing.sm }]}>
             ¿Cómo te sientes hoy?
           </Text>
-          <Text style={[Fonts.body, {  color: Colors.textOnPrimary, textAlign: 'center', marginBottom: Spacing.xl }]}>
+          <Text style={[Fonts.body, { color: '#556B2F', textAlign: 'center', marginBottom: Spacing.xl }]}>
             No hay respuestas correctas o incorrectas. Solo lo que sientes en este momento.
           </Text>
-          
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
             {EMOTIONAL_STATES.map(state => (
               <CustomButton

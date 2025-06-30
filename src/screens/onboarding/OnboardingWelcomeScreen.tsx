@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import { View, Text, SafeAreaView, StatusBar, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import LinearGradient from 'react-native-linear-gradient';
 import CustomButton from '../../components/CustomButton';
-import { GlobalStyles, Colors, Spacing } from '../../styles/theme';
+import { GlobalStyles, Colors, Gradients, Spacing } from '../../styles/theme';
 import { Fonts } from '../../styles/typography';
 import { OnboardingStackParamList } from '../../navigation/types';
 import onboardingService from '../../services/onboardingService';
@@ -36,28 +37,30 @@ const OnboardingWelcomeScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={[GlobalStyles.container, { backgroundColor: Colors.background }]}> 
-      <StatusBar barStyle="dark-content" backgroundColor={Colors.background} />
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: Spacing.lg }}>
-        <Text style={[Fonts.h1, { color: Colors.primaryDark, textAlign: 'center', marginBottom: Spacing.md }]}> 
-          Bienvenido a BeCalm
-        </Text>
-        <Text style={[Fonts.body, { color: Colors.textSecondary, textAlign: 'center', fontSize: 18, lineHeight: 28, marginBottom: Spacing.xl }]}> 
-          Aquí no vienes a cambiarte.{"\n"}
-          Vienes a regresar a ti.{"\n"}
-          Este es tu espacio personal de calma.
-        </Text>
-        <CustomButton
-          title="Entrar a mi espacio"
-          onPress={handleStart}
-          variant="primary"
-          loading={loading}
-          icon="🕊️"
-          style={{ backgroundColor: Colors.primary, borderRadius: 12 }}
-          textStyle={{ color: Colors.background }}
-        />
-      </View>
-    </SafeAreaView>
+    <LinearGradient colors={['#1a2a3a', '#000']} style={{ flex: 1 }}>
+  <StatusBar barStyle="light-content" backgroundColor="#1a2a3a" />
+  <SafeAreaView style={GlobalStyles.container}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: Spacing.lg }}>
+      <Text style={[Fonts.h1, { color: '#556B2F', textAlign: 'center', marginBottom: Spacing.md }]}> 
+        Bienvenido a BeCalm
+      </Text>
+      <Text style={[Fonts.body, { color: '#556B2F', textAlign: 'center', fontSize: 18, lineHeight: 28, marginBottom: Spacing.xl }]}> 
+        Aquí no vienes a cambiarte.{"\n"}
+        Vienes a regresar a ti.{"\n"}
+        Este es tu espacio personal de calma.
+      </Text>
+      <CustomButton
+            title="Entrar a mi espacio"
+            onPress={handleStart}
+            variant="primary"
+            loading={loading}
+            icon="🕊️"
+            style={{ backgroundColor: Colors.primary, borderRadius: 12 }}
+            textStyle={{ color: Colors.background }}
+          />
+        </View>
+      </SafeAreaView>
+    </LinearGradient>
   );
 };
 

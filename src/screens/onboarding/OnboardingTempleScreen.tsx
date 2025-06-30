@@ -17,6 +17,9 @@ interface Props {
   navigation: NavigationProps;
 }
 
+// Cambia el color de los títulos y subtítulos a '#556B2F'
+const TITLE_COLOR = '#556B2F';
+
 const OnboardingTempleScreen: React.FC<Props> = ({ navigation }) => {
   const [templeName, setTempleName] = useState('');
   const [loading, setLoading] = useState(false);
@@ -39,31 +42,31 @@ const OnboardingTempleScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <LinearGradient colors={['#1a2a3a', '#000']} style={{ flex: 1 }}>
-      <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
+      <StatusBar barStyle="light-content" backgroundColor="#1a2a3a" />
       <SafeAreaView style={GlobalStyles.container}>
-        <View style={{ flex: 1, justifyContent: 'center', padding: Spacing.lg }}>
-          <Text style={[Fonts.h2, { color: Colors.textOnPrimary, textAlign: 'center', marginBottom: Spacing.sm }]}>
-            Tu Templo Interior
-          </Text>
-          <Text style={[Fonts.body, { color: Colors.textOnPrimary, textAlign: 'center', marginBottom: Spacing.xl }]}>
-            Este es tu refugio. Un lugar solo para ti. Dale un nombre que resuene contigo.
-          </Text>
-          <CustomInput
-            label="Nombre de tu templo"
-            value={templeName}
-            onChangeText={setTempleName}
-            placeholder="Ej: El Jardín Sereno, Mi Refugio Estelar..."
-            icon="🏛️"
-          />
-          <CustomButton
-            title="Siguiente"
-            onPress={handleNext}
-            variant="gradient"
-            loading={loading}
-            disabled={!templeName.trim()}
-            style={{ marginTop: Spacing.lg }}
-          />
-        </View>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: Spacing.lg }}>
+        <Text style={[Fonts.h2, { color: '#556B2F', textAlign: 'center', marginBottom: Spacing.sm }]}>
+        Tu Templo Interior
+        </Text>
+        <Text style={[Fonts.body, { color: '#556B2F', textAlign: 'center', marginBottom: Spacing.xl }]}>
+        Este es tu refugio. Un lugar solo para ti. Dale un nombre que resuene contigo.
+        </Text>
+        <CustomInput
+        label="Nombre de tu templo"
+        value={templeName}
+        onChangeText={setTempleName}
+        placeholder="Ej: El Jardín Sereno, Mi Refugio Estelar..."
+        icon="🏛️"
+        />
+        <CustomButton
+        title="Siguiente"
+        onPress={handleNext}
+        variant="gradient"
+        loading={loading}
+        disabled={!templeName.trim()}
+        style={{ marginTop: Spacing.lg }}
+        />
+      </View>
       </SafeAreaView>
     </LinearGradient>
   );
