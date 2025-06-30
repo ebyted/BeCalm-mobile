@@ -4,7 +4,8 @@ import API_CONFIG from '../config/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const getAuthHeaders = async () => {
-  const token = await AsyncStorage.getItem('access_token'); // <-- changed from 'userToken' to 'access_token'
+  const token = await AsyncStorage.getItem('access_token');
+  console.log('Token found:', token ? 'Yes' : 'No');
   return {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -16,9 +17,16 @@ const getAuthHeaders = async () => {
 const API_URL = API_CONFIG.BASE_URL;
 
 export const getProfile = async (): Promise<UserProfile> => {
-  const config = await getAuthHeaders();
-  const response = await axios.get(`${API_URL}${API_CONFIG.ENDPOINTS.GET_PROFILE}`, config);
-  return response.data;
+  try {
+    console.log('Fetching profile from:', `${API_URL}${API_CONFIG.ENDPOINTS.GET_PROFILE}`);
+    const config = await getAuthHeaders();
+    const response = await axios.get(`${API_URL}${API_CONFIG.ENDPOINTS.GET_PROFILE}`, config);
+    console.log('Profile response status:', response.status);
+    return response.data;
+  } catch (error: any) {
+    console.error('Error fetching profile:', error.response?.status, error.response?.data, error.message);
+    throw error;
+  }
 };
 
 export const updateProfile = async (profileData: Partial<UserProfile>): Promise<UserProfile> => {
@@ -28,11 +36,16 @@ export const updateProfile = async (profileData: Partial<UserProfile>): Promise<
 };
 
 export const getOnboardingData = async (): Promise<UserOnboardingData> => {
-    // Note: The backend uses the same endpoint for GET and PUT for onboarding data within the profile.
-    // We alias it here for clarity, but it points to UPDATE_ONBOARDING_DATA.
-  const config = await getAuthHeaders();
-  const response = await axios.get(`${API_URL}${API_CONFIG.ENDPOINTS.UPDATE_ONBOARDING_DATA}`, config);
-  return response.data;
+  try {
+    console.log('Fetching onboarding data from:', `${API_URL}${API_CONFIG.ENDPOINTS.UPDATE_ONBOARDING_DATA}`);
+    const config = await getAuthHeaders();
+    const response = await axios.get(`${API_URL}${API_CONFIG.ENDPOINTS.UPDATE_ONBOARDING_DATA}`, config);
+    console.log('Onboarding data response status:', response.status);
+    return response.data;
+  } catch (error: any) {
+    console.error('Error fetching onboarding data:', error.response?.status, error.response?.data, error.message);
+    throw error;
+  }
 };
 
 export const updateOnboardingData = async (onboardingData: Partial<UserOnboardingData>): Promise<UserOnboardingData> => {
@@ -42,15 +55,29 @@ export const updateOnboardingData = async (onboardingData: Partial<UserOnboardin
 };
 
 export const getHeartRateData = async (): Promise<HeartRateData[]> => {
-  const config = await getAuthHeaders();
-  const response = await axios.get(`${API_URL}${API_CONFIG.ENDPOINTS.GET_HEART_RATE_HISTORY}`, config);
-  return response.data;
+  try {
+    console.log('Fetching heart rate data from:', `${API_URL}${API_CONFIG.ENDPOINTS.GET_HEART_RATE_HISTORY}`);
+    const config = await getAuthHeaders();
+    const response = await axios.get(`${API_URL}${API_CONFIG.ENDPOINTS.GET_HEART_RATE_HISTORY}`, config);
+    console.log('Heart rate data response status:', response.status);
+    return response.data;
+  } catch (error: any) {
+    console.error('Error fetching heart rate data:', error.response?.status, error.response?.data, error.message);
+    throw error;
+  }
 };
 
 export const getAppEvents = async (): Promise<AppEvent[]> => {
-  const config = await getAuthHeaders();
-  const response = await axios.get(`${API_URL}${API_CONFIG.ENDPOINTS.GET_APP_EVENTS}`, config);
-  return response.data;
+  try {
+    console.log('Fetching app events from:', `${API_URL}${API_CONFIG.ENDPOINTS.GET_APP_EVENTS}`);
+    const config = await getAuthHeaders();
+    const response = await axios.get(`${API_URL}${API_CONFIG.ENDPOINTS.GET_APP_EVENTS}`, config);
+    console.log('App events response status:', response.status);
+    return response.data;
+  } catch (error: any) {
+    console.error('Error fetching app events:', error.response?.status, error.response?.data, error.message);
+    throw error;
+  }
 };
 
 export const simulateData = async (): Promise<any> => {
