@@ -14,7 +14,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
 
 // Components
-import CustomInput from '../components/CustomInput';
+import { CustomInput } from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import LoadingSpinner from '../components/LoadingSpinner';
 

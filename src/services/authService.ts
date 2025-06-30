@@ -156,9 +156,6 @@ class AuthService {
     return headers;
   }
 
-  // Modo demo cuando el servidor no está disponible
-  
-
   async checkHealth(): Promise<boolean> {
     try {
       const workingUrl = await API_CONFIG.findWorkingBackend();
