@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   StatusBar,
   Alert,
-  Image
+  Image,
+  ImageBackground
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
@@ -25,6 +26,7 @@ import { RootStackParamList, MenuItem } from '../types';
 // Styles
 import { GlobalStyles, Colors, Gradients, Spacing } from '../styles/theme';
 
+// Iconos
 import iconDialogo from './assets/icon-dialogo.png';
 import iconDiario from './assets/icon-diario.png';
 import iconMapa from './assets/icon-mapa.png';
@@ -33,6 +35,9 @@ import iconMensajes from './assets/icon-mensajes.png';
 import iconRitual from './assets/icon-ritual.png';
 import iconSilencio from './assets/icon-silencio.png';
 
+// Imagen de fondo
+import desertBackground from './assets/desert.jpg';
+
 type MainMenuNavigationProp = StackNavigationProp<RootStackParamList>;
 
 interface Props {
@@ -40,67 +45,16 @@ interface Props {
 }
 
 const MainMenuScreen: React.FC<Props> = ({ navigation }) => {
-
   const menuItems: MenuItem[] = [
-    {
-      name: 'Diálogo Conmigo',
-      path: 'DialogoSagrado',
-      icon: '🕊️',
-      emoji: '🕊️',
-      color: Colors.primary,
-      iconAsset: 'icon-dialogo.png',
-    },
-    {
-      name: 'Diario Vivo',
-      path: 'DiarioVivo',
-      icon: '📖',
-      emoji: '📖',
-      color: Colors.secondary,
-      iconAsset: 'icon-diario.png',
-    },
-    {
-      name: 'Medita Conmigo',
-      path: 'MeditaConmigo',
-      icon: '🧘‍♀️',
-      emoji: '🧘‍♀️',
-      color: Colors.accent,
-      iconAsset: 'icon-medita.png',
-    },
-    {
-      name: 'Mensajes del Alma',
-      path: 'MensajesDelAlma',
-      icon: '💌',
-      emoji: '💌',
-      color: Colors.primary,
-      iconAsset: 'icon-mensajes.png',
-    },
-    {
-      name: 'Ritual Diario',
-      path: 'RitualDiario',
-      icon: '📅',
-      emoji: '📅',
-      color: Colors.accent,
-      iconAsset: 'icon-ritual.png',
-    },
-    {
-      name: 'Mapa Interior',
-      path: 'MapaInterior',
-      icon: '🗺️',
-      emoji: '🗺️',
-      color: Colors.accent,
-      iconAsset: 'icon-mapa.png',
-    },
-    {
-      name: 'Silencio Sagrado',
-      path: 'SilencioSagrado',
-      icon: '🤫',
-      emoji: '🤫',
-      color: Colors.primary,
-      iconAsset: 'icon-silencio.png',
-    }
+    { name: 'Diálogo Conmigo', path: 'DialogoSagrado', icon: '🕊️', emoji: '🕊️', color: Colors.primary, iconAsset: 'icon-dialogo.png' },
+    { name: 'Diario Vivo', path: 'DiarioVivo', icon: '📖', emoji: '📖', color: Colors.secondary, iconAsset: 'icon-diario.png' },
+    { name: 'Medita Conmigo', path: 'MeditaConmigo', icon: '🧘‍♀️', emoji: '🧘‍♀️', color: Colors.accent, iconAsset: 'icon-medita.png' },
+    { name: 'Mensajes del Alma', path: 'MensajesDelAlma', icon: '💌', emoji: '💌', color: Colors.primary, iconAsset: 'icon-mensajes.png' },
+    { name: 'Ritual Diario', path: 'RitualDiario', icon: '📅', emoji: '📅', color: Colors.accent, iconAsset: 'icon-ritual.png' },
+    { name: 'Mapa Interior', path: 'MapaInterior', icon: '🗺️', emoji: '🗺️', color: Colors.accent, iconAsset: 'icon-mapa.png' },
+    { name: 'Silencio Sagrado', path: 'SilencioSagrado', icon: '🤫', emoji: '🤫', color: Colors.primary, iconAsset: 'icon-silencio.png' },
   ];
 
-  // Mapeo de iconos para evitar problemas con require dinámico
   const iconMap: Record<string, any> = {
     'icon-dialogo.png': iconDialogo,
     'icon-diario.png': iconDiario,
@@ -122,10 +76,7 @@ const MainMenuScreen: React.FC<Props> = ({ navigation }) => {
           style: 'destructive',
           onPress: async () => {
             await authService.logout();
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'Login' }],
-            });
+            navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
           }
         }
       ]
@@ -134,94 +85,106 @@ const MainMenuScreen: React.FC<Props> = ({ navigation }) => {
 
   const navigateToScreen = (screenName: keyof RootStackParamList) => {
     try {
-      // Todas las pantallas están disponibles como stack screens
       navigation.navigate(screenName);
     } catch (error) {
       console.warn('Error navegando a la pantalla:', screenName, error);
-      // Fallback: intentar navegar de otra manera si hay problemas
       navigation.push(screenName as any);
     }
   };
 
   return (
-    <LinearGradient colors={Gradients.background} style={GlobalStyles.container}>
-      <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
-      
-      <ScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={{ padding: Spacing.md }}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Header */}
-        <View style={{ alignItems: 'center', marginTop: Spacing.xl, marginBottom: Spacing.xl }}>
-          <Text style={{ fontSize: 50, marginBottom: Spacing.sm }}>🕊️</Text>
-          <Text style={[GlobalStyles.title, { marginBottom: Spacing.xs }]}>
-            BeCalm
-          </Text>
-          <Text style={[GlobalStyles.bodyText, { textAlign: 'center', opacity: 0.8 }]}>
-            Tu santuario digital de paz y bienestar
-          </Text>
-        </View>
+    <ImageBackground
+      source={desertBackground}
+      style={{ flex: 1 }}
+      resizeMode="cover"
+    >
+      <LinearGradient colors={Gradients.background} style={GlobalStyles.container}>
+        <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
 
-        {/* Menu Items */}
-        <View style={{ marginBottom: Spacing.xl }}>
-          {menuItems.map((item, index) => (
-            <TouchableOpacity
-              key={item.name}
-              onPress={() => navigateToScreen(item.path)}
-              activeOpacity={0.8}
-              style={{ marginBottom: Spacing.sm }}
-            >
-              <LinearGradient
-                colors={[Colors.glassBackground, 'rgba(255, 255, 255, 0.05)']}
-                style={[
-                  GlobalStyles.menuItem,
-                  {
-                    transform: [{ scale: 1 }],
-                  }
-                ]}
+        <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={{ padding: Spacing.md }}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* Header */}
+          <View style={{ alignItems: 'center', marginTop: Spacing.xl, marginBottom: Spacing.xl }}>
+            <Text style={{ fontSize: 50, marginBottom: Spacing.sm }}>🕊️</Text>
+            <Text style={[GlobalStyles.title, { marginBottom: Spacing.xs }]}>
+              BeCalm
+            </Text>
+            <Text style={[GlobalStyles.bodyText, { textAlign: 'center', opacity: 0.8 }]}>
+              Tu santuario digital de paz y bienestar
+            </Text>
+          </View>
+
+          {/* Menu Items */}
+          <View style={{ marginBottom: Spacing.xl }}>
+            {menuItems.map((item) => (
+              <TouchableOpacity
+                key={item.name}
+                onPress={() => navigateToScreen(item.path)}
+                activeOpacity={0.8}
+                style={{ marginBottom: Spacing.sm }}
               >
-                <View style={[
-                  GlobalStyles.menuItemIcon,
-                  { backgroundColor: item.color + '20', alignItems: 'center', justifyContent: 'center', borderRadius: 12, width: 48, height: 48 }
-                ]}>
-                  {item.iconAsset ? (
-                    <Image
-                      source={iconMap[item.iconAsset]}
-                      style={{ width: 36, height: 36, resizeMode: 'contain' }}
-                    />
-                  ) : (
-                    <Text style={{ fontSize: 24 }}>{item.emoji}</Text>
-                  )}
-                </View>
-                
-                <Text style={GlobalStyles.menuItemText}>
-                  {item.name}
-                </Text>
-                
-                <Text style={{ 
-                  fontSize: 18, 
-                  color: Colors.primaryDark,
-                  fontWeight: 'bold' 
-                }}>
-                  ❯
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          ))}
-        </View>
+                <LinearGradient
+                  colors={[Colors.glassBackground, 'rgba(255, 255, 255, 0.05)']}
+                  style={[GlobalStyles.menuItem, { transform: [{ scale: 1 }] }]}
+                >
+                  <View style={[
+                    GlobalStyles.menuItemIcon,
+                    {
+                      backgroundColor: item.color + '20',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: 12,
+                      width: 48,
+                      height: 48
+                    }
+                  ]}>
+                    {item.iconAsset ? (
+                      <Image
+                        source={iconMap[item.iconAsset]}
+                        style={{ width: 36, height: 36, resizeMode: 'contain' }}
+                      />
+                    ) : (
+                      <Text style={{ fontSize: 24 }}>{item.emoji}</Text>
+                    )}
+                  </View>
 
-        {/* Logout Button */}
-        <View style={{ marginTop: Spacing.lg, marginBottom: Spacing.xl }}>
-          <CustomButton
-            title="Cerrar Sesión"
-            onPress={handleLogout}
-            variant="secondary"
-            icon="🚪"
-          />
-        </View>
-      </ScrollView>
-    </LinearGradient>
+                  {/* Texto con sombra y visibilidad */}
+                  <Text style={[GlobalStyles.menuItemText, {
+                    color: '#222',
+                    textShadowColor: '#fff',
+                    textShadowOffset: { width: 1, height: 1 },
+                    textShadowRadius: 1
+                  }]}>
+                    {item.name}
+                  </Text>
+
+                  <Text style={{
+                    fontSize: 18,
+                    color: Colors.primaryDark,
+                    fontWeight: 'bold'
+                  }}>
+                    ❯
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          {/* Logout Button */}
+          <View style={{ marginTop: Spacing.lg, marginBottom: Spacing.xl }}>
+            <CustomButton
+              title="Cerrar Sesión"
+              onPress={handleLogout}
+              variant="secondary"
+              icon="🚪"
+            />
+          </View>
+        </ScrollView>
+      </LinearGradient>
+    </ImageBackground>
   );
 };
 
