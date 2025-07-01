@@ -10,8 +10,11 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  StatusBar
+  StatusBar,
+  Image
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 import LinearGradient from 'react-native-linear-gradient';
 
 // Components
@@ -153,30 +156,11 @@ const DialogoSagradoScreen: React.FC = () => {
   return (
     <LinearGradient colors={Gradients.background} style={GlobalStyles.container}>
       <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
-      
       <KeyboardAvoidingView 
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
       >
-        {/* Header */}
-        <View style={{
-          padding: Spacing.md,
-          paddingTop: Spacing.xl,
-          borderBottomWidth: 1,
-          borderBottomColor: Colors.glassBorder
-        }}>
-          <View style={{ alignItems: 'center' }}>
-            <Text style={{ fontSize: 40, marginBottom: Spacing.xs }}>🕊️</Text>
-            <Text style={[GlobalStyles.subtitle, { textAlign: 'center' }]}>
-              Diálogo Conmigo
-            </Text>
-            <Text style={[GlobalStyles.caption, { textAlign: 'center', opacity: 0.8 }]}>
-              Comparte tus pensamientos y recibe sabiduría interior
-            </Text>
-          </View>
-        </View>
-
         {/* Messages */}
         <ScrollView
           ref={scrollViewRef}

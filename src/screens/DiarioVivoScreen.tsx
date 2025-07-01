@@ -8,7 +8,8 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  StatusBar
+  StatusBar,
+  Image
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
@@ -198,7 +199,10 @@ const DiarioVivoScreen: React.FC = () => {
   return (
     <LinearGradient colors={Gradients.background} style={GlobalStyles.container}>
       <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
-      
+      <View style={{ alignItems: 'center', padding: Spacing.md }}>
+        <Image source={require('../img/icons/icon-diario.png')} style={{ width: 80, height: 80, marginBottom: Spacing.sm }} />
+        <Text style={GlobalStyles.title}>Diario Vivo</Text>
+      </View>
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{ padding: Spacing.md }}
@@ -206,11 +210,7 @@ const DiarioVivoScreen: React.FC = () => {
       >
         {/* Header */}
         <View style={{ alignItems: 'center', marginTop: Spacing.xl, marginBottom: Spacing.lg }}>
-          <Text style={{ fontSize: 40, marginBottom: Spacing.xs }}>📖</Text>
-          <Text style={[GlobalStyles.subtitle, { textAlign: 'center' }]}>
-            Diario Vivo
-          </Text>
-          <Text style={[GlobalStyles.caption, { textAlign: 'center', opacity: 0.8 }]}>
+               <Text style={[GlobalStyles.caption, { textAlign: 'center', opacity: 0.8 }]}>
             Registra tus pensamientos y recibe reflexiones personalizadas
           </Text>
         </View>

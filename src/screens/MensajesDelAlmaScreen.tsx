@@ -5,7 +5,8 @@ import {
   View,
   Text,
   ScrollView,
-  StatusBar
+  StatusBar,
+  Image
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -84,7 +85,10 @@ const MensajesDelAlmaScreen: React.FC = () => {
   return (
     <LinearGradient colors={Gradients.background} style={GlobalStyles.container}>
       <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
-      
+      <View style={{ alignItems: 'center', padding: Spacing.md }}>
+        <Image source={require('../img/icons/icon-mensajes.png')} style={{ width: 80, height: 80, marginBottom: Spacing.sm }} />
+        <Text style={GlobalStyles.title}>Mensajes del Alma</Text>
+      </View>
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{ padding: Spacing.md }}
@@ -92,10 +96,6 @@ const MensajesDelAlmaScreen: React.FC = () => {
       >
         {/* Header */}
         <View style={{ alignItems: 'center', marginTop: Spacing.xl, marginBottom: Spacing.lg }}>
-          <Text style={{ fontSize: 40, marginBottom: Spacing.xs }}>💌</Text>
-          <Text style={[GlobalStyles.subtitle, { textAlign: 'center' }]}>
-            Mensajes del Alma
-          </Text>
           <Text style={[GlobalStyles.caption, { textAlign: 'center', opacity: 0.8 }]}>
             Recibe palabras que nutren tu espíritu y elevan tu vibración
           </Text>

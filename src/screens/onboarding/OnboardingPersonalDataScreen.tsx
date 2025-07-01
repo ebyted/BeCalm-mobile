@@ -1,6 +1,6 @@
 // src/screens/onboarding/OnboardingPersonalDataScreen.tsx
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, SafeAreaView, StatusBar, Alert, ScrollView } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
@@ -14,7 +14,7 @@ import onboardingService from '../../services/onboardingService';
 
 type Props = StackScreenProps<OnboardingStackParamList, 'OnboardingPersonalData'>;
 
-const OnboardingPersonalDataScreen: React.FC<Props> = ({ navigation }) => {
+const OnboardingPersonalDataScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const [formData, setFormData] = useState({
     full_name: '',
     birth_date: '', // YYYY-MM-DD
@@ -23,11 +23,11 @@ const OnboardingPersonalDataScreen: React.FC<Props> = ({ navigation }) => {
   });
   const [loading, setLoading] = useState(false);
 
-  const handleInputChange = (field: keyof typeof formData, value: string) => {
+  const handleInputChange = useCallback((field: keyof typeof formData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-  };
+  }, []);
 
-  const handleNext = async () => {
+  const handleNext = useCallback(async () => {
     const { full_name, birth_date, birth_place, birth_time } = formData;
     if (!full_name.trim() || !birth_date.trim() || !birth_place.trim()) {
       Alert.alert('Un momento', 'Por favor, completa tu nombre, fecha y lugar de nacimiento.');
@@ -58,7 +58,7 @@ const OnboardingPersonalDataScreen: React.FC<Props> = ({ navigation }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [formData, navigation]);
 
   return (
     <LinearGradient colors={Gradients.background} style={{ flex: 1 }}>
@@ -114,6 +114,6 @@ const OnboardingPersonalDataScreen: React.FC<Props> = ({ navigation }) => {
       </SafeAreaView>
     </LinearGradient>
   );
-};
+});
 
 export default OnboardingPersonalDataScreen;

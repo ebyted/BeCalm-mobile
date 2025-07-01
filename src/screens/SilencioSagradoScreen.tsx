@@ -6,7 +6,8 @@ import {
   Text,
   ScrollView,
   StatusBar,
-  Alert
+  Alert,
+  Image
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -136,7 +137,10 @@ const SilencioSagradoScreen: React.FC = () => {
   return (
     <LinearGradient colors={Gradients.background} style={GlobalStyles.container}>
       <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
-      
+      <View style={{ alignItems: 'center', padding: Spacing.md }}>
+        <Image source={require('../img/icons/icon-silencio.png')} style={{ width: 80, height: 80, marginBottom: Spacing.sm }} />
+        <Text style={GlobalStyles.title}>Silencio Sagrado</Text>
+      </View>
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{ padding: Spacing.md }}
@@ -144,10 +148,6 @@ const SilencioSagradoScreen: React.FC = () => {
       >
         {/* Header */}
         <View style={{ alignItems: 'center', marginTop: Spacing.xl, marginBottom: Spacing.lg }}>
-          <Text style={{ fontSize: 40, marginBottom: Spacing.xs }}>🤫</Text>
-          <Text style={[GlobalStyles.subtitle, { textAlign: 'center' }]}>
-            Silencio Sagrado
-          </Text>
           <Text style={[GlobalStyles.caption, { textAlign: 'center', opacity: 0.8 }]}>
             Encuentra la profundidad del ser en el silencio absoluto
           </Text>

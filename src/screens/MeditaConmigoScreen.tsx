@@ -7,7 +7,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
-  StatusBar
+  StatusBar,
+  Image
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -252,6 +253,11 @@ Durante estos ${meditation.duration} minutos, date permiso para simplemente ser.
     <LinearGradient colors={Gradients.background} style={GlobalStyles.container}>
       <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
       
+      <View style={{ alignItems: 'center', padding: Spacing.md }}>
+        <Image source={require('../img/icons/icon-medita.png')} style={{ width: 80, height: 80, marginBottom: Spacing.sm }} />
+        <Text style={GlobalStyles.title}>Medita Conmigo</Text>
+      </View>
+
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{ padding: Spacing.md }}
@@ -259,10 +265,6 @@ Durante estos ${meditation.duration} minutos, date permiso para simplemente ser.
       >
         {/* Header */}
         <View style={{ alignItems: 'center', marginTop: Spacing.xl, marginBottom: Spacing.lg }}>
-          <Text style={{ fontSize: 40, marginBottom: Spacing.xs }}>🧘‍♀️</Text>
-          <Text style={[GlobalStyles.subtitle, { textAlign: 'center' }]}>
-            Medita Conmigo
-          </Text>
           <Text style={[GlobalStyles.caption, { textAlign: 'center', opacity: 0.8 }]}>
             Encuentra tu paz interior con sesiones guiadas personalizadas
           </Text>

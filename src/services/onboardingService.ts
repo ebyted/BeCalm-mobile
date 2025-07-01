@@ -71,21 +71,34 @@ class OnboardingService {
 
   async getWelcomeMessage(): Promise<string> {
     const sessionId = await this.getSessionId();
-    const response = await fetch(`${API_CONFIG.BASE_URL}/onboarding/generate-welcome`, {
-        method: 'POST',
-        headers: API_CONFIG.DEFAULT_HEADERS,
-        body: JSON.stringify({ session_id: sessionId }),
-    });
-    if (!response.ok) {
-        let errorText = '';
-        try {
-          errorText = await response.text();
-        } catch {}
-        console.error('Failed to generate welcome message:', response.status, errorText);
-        throw new Error(`Failed to generate welcome message: ${response.status} ${errorText}`);
+    if (!sessionId) {
+      throw new Error('No session ID found for welcome message.');
     }
-    const data = await response.json();
-    return data.welcome_message;
+
+    // --- DEBUG: Imprimir el sessionId para verificar su valor ---
+    console.log('Enviando sessionId al backend:', sessionId);
+
+    try {
+      const response = await fetch(`${API_CONFIG.BASE_URL}/onboarding/generate-welcome`, {
+          method: 'POST',
+          headers: API_CONFIG.DEFAULT_HEADERS,
+          body: JSON.stringify({ session_id: sessionId }),
+      });
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        // Lanza un error con el detalle del servidor si está disponible
+        throw new Error(responseData.detail || `Server error: ${response.status}`);
+      }
+
+      return responseData.welcome_message;
+
+    } catch (error) {
+      console.error('Error fetching welcome message:', error instanceof Error ? error.message : String(error));
+      // Re-lanza el error para que el componente que llama pueda manejarlo
+      throw new Error('Failed to generate welcome message from server.');
+    }
   }
 
   async completeRegistration(email: string, password: string): Promise<any> {

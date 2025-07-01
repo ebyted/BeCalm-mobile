@@ -211,7 +211,7 @@ const LoginScreen: React.FC<Props> = ({ navigation, route }) => {
           </View>
 
           {/* Form */}
-          <View style={GlobalStyles.glassCard}>
+          <View style={[GlobalStyles.glassCard, { paddingVertical: Spacing.md }]}>
             {activeTab === 'login' ? (
               <>
                 <CustomInput
