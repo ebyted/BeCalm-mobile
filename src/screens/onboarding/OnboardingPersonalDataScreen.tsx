@@ -1,7 +1,7 @@
 // src/screens/onboarding/OnboardingPersonalDataScreen.tsx
 
 import React, { useState } from 'react';
-import { View, Text, SafeAreaView, StatusBar, Alert, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, SafeAreaView, StatusBar, Alert, ScrollView } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
 import { isValid, parse } from 'date-fns';
@@ -11,7 +11,6 @@ import { GlobalStyles, Colors, Gradients, Spacing } from '../../styles/theme';
 import { Fonts } from '../../styles/typography';
 import { OnboardingStackParamList } from '../../navigation/types';
 import onboardingService from '../../services/onboardingService';
-import DatePicker from 'react-native-date-picker';
 
 type Props = StackScreenProps<OnboardingStackParamList, 'OnboardingPersonalData'>;
 
@@ -23,8 +22,6 @@ const OnboardingPersonalDataScreen: React.FC<Props> = ({ navigation }) => {
     birth_time: '', // HH:MM (opcional)
   });
   const [loading, setLoading] = useState(false);
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [showTimePicker, setShowTimePicker] = useState(false);
 
   const handleInputChange = (field: keyof typeof formData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -83,37 +80,13 @@ const OnboardingPersonalDataScreen: React.FC<Props> = ({ navigation }) => {
               placeholder="Nombre y Apellido"
               icon="👤"
             />
-            <TouchableOpacity activeOpacity={0.8} onPress={() => setShowDatePicker(true)}>
-              <CustomInput
-                label="Fecha de Nacimiento"
-                value={formData.birth_date}
-                placeholder="YYYY-MM-DD"
-                icon="🎂"
-                pointerEvents="none"
-                onChangeText={() => {}}
-              />
-            </TouchableOpacity>
-            
-            <DatePicker
-                modal
-                open={showDatePicker}
-                date={formData.birth_date ? parse(formData.birth_date, 'yyyy-MM-dd', new Date()) : new Date()}
-                mode="date"
-                onConfirm={(date) => {
-                  setShowDatePicker(false);
-                  const yyyy = date.getFullYear();
-                  const mm = String(date.getMonth() + 1).padStart(2, '0');
-                  const dd = String(date.getDate()).padStart(2, '0');
-                  handleInputChange('birth_date', `${yyyy}-${mm}-${dd}`);
-                }}
-                onCancel={() => {
-                  setShowDatePicker(false);
-                }}
-                title="Selecciona tu fecha de nacimiento"
-                confirmText="Confirmar"
-                cancelText="Cancelar"
+            <CustomInput
+              label="Fecha de Nacimiento"
+              value={formData.birth_date}
+              placeholder="YYYY-MM-DD"
+              icon="🎂"
+              onChangeText={(text) => handleInputChange('birth_date', text)}
             />
-
             <CustomInput
               label="Lugar de Nacimiento"
               value={formData.birth_place}
@@ -121,34 +94,12 @@ const OnboardingPersonalDataScreen: React.FC<Props> = ({ navigation }) => {
               placeholder="Ciudad, País"
               icon="🌍"
             />
-            <TouchableOpacity activeOpacity={0.8} onPress={() => setShowTimePicker(true)}>
-              <CustomInput
-                label="Hora de Nacimiento (opcional)"
-                value={formData.birth_time}
-                placeholder="HH:MM"
-                icon="⏰"
-                pointerEvents="none"
-                onChangeText={() => {}}
-              />
-            </TouchableOpacity>
-
-            <DatePicker
-                modal
-                open={showTimePicker}
-                date={formData.birth_time ? parse(formData.birth_time, 'HH:mm', new Date()) : new Date()}
-                mode="time"
-                onConfirm={(time) => {
-                  setShowTimePicker(false);
-                  const hh = String(time.getHours()).padStart(2, '0');
-                  const min = String(time.getMinutes()).padStart(2, '0');
-                  handleInputChange('birth_time', `${hh}:${min}`);
-                }}
-                onCancel={() => {
-                  setShowTimePicker(false);
-                }}
-                title="Selecciona tu hora de nacimiento"
-                confirmText="Confirmar"
-                cancelText="Cancelar"
+            <CustomInput
+              label="Hora de Nacimiento (opcional)"
+              value={formData.birth_time}
+              placeholder="HH:MM"
+              icon="⏰"
+              onChangeText={(text) => handleInputChange('birth_time', text)}
             />
 
             <CustomButton

@@ -1,7 +1,15 @@
 // src/components/CustomInput.tsx - Componente de input personalizado
 
 import React, { useState } from 'react';
-import { View, TextInput, Text, TouchableOpacity } from 'react-native';
+import {
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import { GlobalStyles, Colors } from '../styles/theme';
 
 interface CustomInputProps {
@@ -17,6 +25,7 @@ interface CustomInputProps {
   icon?: string;
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   pointerEvents?: 'none' | 'auto' | 'box-none' | 'box-only';
+  style?: StyleProp<ViewStyle | TextStyle>; // 🔧 agregada prop style
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
@@ -32,6 +41,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   icon,
   autoCapitalize = 'sentences',
   pointerEvents,
+  style, // 🔧 agregada prop style aquí también
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const isPassword = secureTextEntry;
@@ -44,7 +54,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
           {label}
         </Text>
       )}
-      
+
       <View style={{ position: 'relative' }}>
         <TextInput
           value={value}
@@ -64,10 +74,11 @@ const CustomInput: React.FC<CustomInputProps> = ({
               textAlignVertical: multiline ? 'top' : 'center',
               paddingRight: isPassword ? 50 : 16,
             },
-            error && { borderColor: Colors.error, borderWidth: 1 }
+            error && { borderColor: Colors.error, borderWidth: 1 },
+            style, // 🔧 se aplica el estilo externo aquí
           ]}
         />
-        
+
         {isPassword && (
           <TouchableOpacity
             onPress={() => setIsPasswordVisible(!isPasswordVisible)}
@@ -84,7 +95,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
           </TouchableOpacity>
         )}
       </View>
-      
+
       {error && (
         <Text style={[GlobalStyles.errorText, { marginTop: 4, fontSize: 12 }]}>
           {error}

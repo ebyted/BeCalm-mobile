@@ -32,12 +32,17 @@ export type MainStackParamList = {
   Dev: undefined;
 };
 
-// Root Stack (handles auth flow and main app)
 export type RootStackParamList = {
   Onboarding: NavigatorScreenParams<OnboardingStackParamList>;
-  Login: undefined;
+  Login: {
+    username?: string;
+    password?: string;
+    fullName?: string;
+  } | undefined;
   Main: NavigatorScreenParams<MainStackParamList>;
+  
 };
+
 
 // Screen props
 export type RootStackScreenProps<T extends keyof RootStackParamList> = StackScreenProps<RootStackParamList, T>;

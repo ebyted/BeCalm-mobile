@@ -12,9 +12,10 @@ import {
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Components
-import { CustomInput } from '../components/CustomInput';
+import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import LoadingSpinner from '../components/LoadingSpinner';
 
@@ -29,11 +30,14 @@ import { GlobalStyles, Colors, Gradients, Spacing } from '../styles/theme';
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
+import { RouteProp } from '@react-navigation/native';
+
 interface Props {
   navigation: LoginScreenNavigationProp;
+  route: RouteProp<RootStackParamList, 'Login'>;
 }
 
-const LoginScreen: React.FC<Props> = ({ navigation }) => {
+const LoginScreen: React.FC<Props> = ({ navigation, route }) => {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
   const [formData, setFormData] = useState({
     username: '',
@@ -46,6 +50,27 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
   useEffect(() => {
     checkAuthStatus();
   }, []);
+
+  useEffect(() => {
+    // Si viene usuario/contraseña por navegación o AsyncStorage, autocompleta
+    const fillFromParamsOrStorage = async () => {
+      if (route?.params?.username && route?.params?.password) {
+        setFormData(prev => ({
+          ...prev,
+          username: route.params?.username ?? '',
+          password: route.params?.password ?? '',
+          fullName: route.params?.fullName ?? ''
+        }));
+        return;
+      }
+      const last = await AsyncStorage.getItem('lastRegisteredUser');
+      if (last) {
+        const { username, password, fullName } = JSON.parse(last);
+        setFormData(prev => ({ ...prev, username, password, fullName: fullName || '' }));
+      }
+    };
+    fillFromParamsOrStorage();
+  }, [route]);
 
   const checkAuthStatus = async () => {
     try {
@@ -192,7 +217,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                 <CustomInput
                   label="Usuario"
                   value={formData.username}
-                  onChangeText={(text) => handleInputChange('username', text)}
+                  onChangeText={(text: string) => handleInputChange('username', text)}
                   placeholder="Ingresa tu usuario"
                   icon="👤"
                 />
@@ -200,7 +225,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                 <CustomInput
                   label="Contraseña"
                   value={formData.password}
-                  onChangeText={(text) => handleInputChange('password', text)}
+                  onChangeText={(text: string) => handleInputChange('password', text)}
                   placeholder="Ingresa tu contraseña"
                   secureTextEntry
                   icon="🔒"
@@ -225,7 +250,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                 <CustomInput
                   label="Nombre completo (opcional)"
                   value={formData.fullName}
-                  onChangeText={(text) => handleInputChange('fullName', text)}
+                  onChangeText={(text: string) => handleInputChange('fullName', text)}
                   placeholder="Tu nombre completo"
                   icon="✨"
                 />
@@ -233,7 +258,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                 <CustomInput
                   label="Usuario"
                   value={formData.username}
-                  onChangeText={(text) => handleInputChange('username', text)}
+                  onChangeText={(text: string) => handleInputChange('username', text)}
                   placeholder="Elige un usuario"
                   icon="👤"
                 />
@@ -241,7 +266,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                 <CustomInput
                   label="Contraseña"
                   value={formData.password}
-                  onChangeText={(text) => handleInputChange('password', text)}
+                  onChangeText={(text: string) => handleInputChange('password', text)}
                   placeholder="Crea una contraseña"
                   secureTextEntry
                   icon="🔒"
