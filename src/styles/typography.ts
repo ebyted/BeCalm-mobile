@@ -8,21 +8,25 @@ export const Fonts = StyleSheet.create({
     fontSize: FontSizes.title,
     fontWeight: 'bold',
     color: Colors.textPrimary,
+    fontFamily: 'Rosemarie-Regular',
   },
   h1: {
     fontSize: FontSizes.headerTitle,
     fontWeight: 'bold',
     color: Colors.textPrimary,
+    fontFamily: 'Rosemarie-Regular',
   },
   h2: {
     fontSize: FontSizes.xxxlarge,
     fontWeight: '600',
     color: Colors.textPrimary,
+    fontFamily: 'Rosemarie-Regular',
   },
   h3: {
     fontSize: FontSizes.xxlarge,
     fontWeight: '600',
     color: Colors.textSecondary,
+    fontFamily: 'Rosemarie-Regular',
   },
   body: {
     fontSize: FontSizes.large,

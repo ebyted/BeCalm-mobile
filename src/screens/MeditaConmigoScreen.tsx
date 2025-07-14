@@ -11,6 +11,8 @@ import {
   Image
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Components
 import CustomButton from '../components/CustomButton';
@@ -24,8 +26,10 @@ import { MeditationSession } from '../types';
 
 // Styles
 import { GlobalStyles, Colors, Gradients, Spacing, Fonts } from '../styles/theme';
+import { Fonts as CustomFonts } from '../styles/typography';
 
 const MeditaConmigoScreen: React.FC = () => {
+  const navigation = useNavigation();
   const [currentSession, setCurrentSession] = useState<MeditationSession | null>(null);
   const [isActive, setIsActive] = useState(false);
   const [timer, setTimer] = useState(0);
@@ -208,10 +212,10 @@ Durante estos ${meditation.duration} minutos, date permiso para simplemente ser.
           {/* Timer Display */}
           <View style={{ alignItems: 'center', marginBottom: Spacing.xl }}>
             <Text style={{ fontSize: 60, marginBottom: Spacing.md }}>🧘‍♀️</Text>
-            <Text style={[GlobalStyles.title, { fontSize: 48, color: Colors.primary }]}>
+            <Text style={[CustomFonts.h1, { fontSize: 48, color: Colors.primary }]}>
               {formatTime(timer)}
             </Text>
-            <Text style={[GlobalStyles.subtitle, { textAlign: 'center' }]}>
+            <Text style={[CustomFonts.h2, { textAlign: 'center' }]}>
               {currentSession.name}
             </Text>
           </View>
@@ -251,11 +255,13 @@ Durante estos ${meditation.duration} minutos, date permiso para simplemente ser.
 
   return (
     <LinearGradient colors={Gradients.background} style={GlobalStyles.container}>
-      <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
-      
-      <View style={{ alignItems: 'center', padding: Spacing.md }}>
-        <Image source={require('../img/icons/icon-medita.png')} style={{ width: 80, height: 80, marginBottom: Spacing.sm }} />
-        <Text style={GlobalStyles.title}>Medita Conmigo</Text>
+      <StatusBar barStyle="dark-content" backgroundColor={Colors.background} />
+
+      <View style={{ padding: Spacing.md, borderBottomWidth: 1, borderBottomColor: Colors.glassBorder, backgroundColor: 'rgba(255,255,255,0.5)' }}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute', left: Spacing.md, top: Spacing.md, zIndex: 1 }}>
+          <Ionicons name="arrow-back" size={28} color={Colors.primaryDark} />
+        </TouchableOpacity>
+        <Text style={[CustomFonts.h2, { textAlign: 'center' }]}>Medita Conmigo</Text>
       </View>
 
       <ScrollView
@@ -271,7 +277,7 @@ Durante estos ${meditation.duration} minutos, date permiso para simplemente ser.
         </View>
 
         {/* Meditation Types */}
-        <Text style={[GlobalStyles.subtitle, { marginBottom: Spacing.md }]}>
+        <Text style={[CustomFonts.h3, { marginBottom: Spacing.md }]}>
           🌟 Elige tu práctica
         </Text>
 
@@ -288,7 +294,7 @@ Durante estos ${meditation.duration} minutos, date permiso para simplemente ser.
             >
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <View style={{ flex: 1 }}>
-                  <Text style={[GlobalStyles.subtitle, { fontSize: Fonts.large, marginBottom: 4 }]}>
+                  <Text style={[CustomFonts.h3, { fontSize: Fonts.large, marginBottom: 4 }]}>
                     {meditation.name}
                   </Text>
                   <Text style={[GlobalStyles.bodyText, { marginBottom: Spacing.xs }]}>

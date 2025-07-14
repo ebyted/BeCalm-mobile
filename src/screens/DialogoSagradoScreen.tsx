@@ -14,7 +14,7 @@ import {
   Image
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 
 // Components
@@ -29,6 +29,7 @@ import { Message } from '../types';
 
 // Styles
 import { GlobalStyles, Colors, Gradients, Spacing, Fonts } from '../styles/theme';
+import { Fonts as CustomFonts } from '../styles/typography';
 
 const DialogoSagradoScreen: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -36,6 +37,7 @@ const DialogoSagradoScreen: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const scrollViewRef = useRef<ScrollView>(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     loadHistory();
@@ -161,6 +163,14 @@ const DialogoSagradoScreen: React.FC = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
       >
+        {/* Header */}
+        <View style={{ padding: Spacing.md, borderBottomWidth: 1, borderBottomColor: Colors.glassBorder, backgroundColor: 'rgba(255,255,255,0.5)' }}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute', left: Spacing.md, top: Spacing.md, zIndex: 1 }}>
+            <Ionicons name="arrow-back" size={28} color={Colors.primaryDark} />
+          </TouchableOpacity>
+          <Text style={[CustomFonts.h2, { textAlign: 'center' }]}>Diálogo Sagrado</Text>
+        </View>
+
         {/* Messages */}
         <ScrollView
           ref={scrollViewRef}

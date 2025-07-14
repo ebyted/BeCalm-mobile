@@ -9,10 +9,15 @@ import {
   TouchableOpacity,
   Alert,
   StatusBar,
-  Image
+  Image,
+  KeyboardAvoidingView,
+  Platform
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Fonts as CustomFonts } from '../styles/typography';
 
 // Components
 import CustomButton from '../components/CustomButton';
@@ -28,6 +33,7 @@ import { DiaryEntry } from '../types';
 import { GlobalStyles, Colors, Gradients, Spacing, Fonts } from '../styles/theme';
 
 const DiarioVivoScreen: React.FC = () => {
+  const navigation = useNavigation();
   const [entries, setEntries] = useState<DiaryEntry[]>([]);
   const [newEntry, setNewEntry] = useState('');
   const [loading, setLoading] = useState(false);
@@ -198,75 +204,85 @@ const DiarioVivoScreen: React.FC = () => {
 
   return (
     <LinearGradient colors={Gradients.background} style={GlobalStyles.container}>
-      <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
-      <View style={{ alignItems: 'center', padding: Spacing.md }}>
-        <Image source={require('../img/icons/icon-diario.png')} style={{ width: 80, height: 80, marginBottom: Spacing.sm }} />
-        <Text style={GlobalStyles.title}>Diario Vivo</Text>
+      <StatusBar barStyle="dark-content" backgroundColor={Colors.background} />
+
+      <View style={{ padding: Spacing.md, borderBottomWidth: 1, borderBottomColor: Colors.glassBorder, backgroundColor: 'rgba(255,255,255,0.5)' }}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute', left: Spacing.md, top: Spacing.md, zIndex: 1 }}>
+          <Ionicons name="arrow-back" size={28} color={Colors.primaryDark} />
+        </TouchableOpacity>
+        <Text style={[CustomFonts.h2, { textAlign: 'center' }]}>Diario Vivo</Text>
       </View>
-      <ScrollView
+
+      <KeyboardAvoidingView
         style={{ flex: 1 }}
-        contentContainerStyle={{ padding: Spacing.md }}
-        showsVerticalScrollIndicator={false}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
       >
-        {/* Header */}
-        <View style={{ alignItems: 'center', marginTop: Spacing.xl, marginBottom: Spacing.lg }}>
-               <Text style={[GlobalStyles.caption, { textAlign: 'center', opacity: 0.8 }]}>
-            Registra tus pensamientos y recibe reflexiones personalizadas
-          </Text>
-        </View>
-
-        {/* New Entry Input */}
-        <View style={[GlobalStyles.glassCard, { marginBottom: Spacing.lg }]}>
-          <Text style={[GlobalStyles.inputLabel, { marginBottom: Spacing.sm }]}>
-            ✍️ Nueva entrada
-          </Text>
-          
-          <TextInput
-            value={newEntry}
-            onChangeText={setNewEntry}
-            placeholder="¿Qué está pasando por tu mente hoy?"
-            placeholderTextColor={Colors.textMuted}
-            multiline
-            numberOfLines={4}
-            maxLength={1000}
-            style={[
-              GlobalStyles.input,
-              {
-                height: 100,
-                textAlignVertical: 'top',
-                marginBottom: Spacing.md
-              }
-            ]}
-          />
-          
-          <CustomButton
-            title="Guardar Entrada"
-            onPress={saveEntry}
-            variant="gradient"
-            disabled={!newEntry.trim() || loading}
-            loading={loading}
-            icon="💾"
-          />
-        </View>
-
-        {/* Entries List */}
-        {entries.length === 0 ? (
-          <View style={[GlobalStyles.glassCard, { alignItems: 'center', padding: Spacing.xl }]}>
-            <Text style={{ fontSize: 40, marginBottom: Spacing.md }}>📝</Text>
-            <Text style={[GlobalStyles.bodyText, { textAlign: 'center', opacity: 0.8 }]}>
-              Aún no tienes entradas en tu diario.{'\n'}
-              Escribe tu primera reflexión para comenzar tu viaje de autoconocimiento.
+        <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={{ padding: Spacing.md }}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* Header */}
+          <View style={{ alignItems: 'center', marginTop: Spacing.xl, marginBottom: Spacing.lg }}>
+            <Text style={[GlobalStyles.caption, { textAlign: 'center', opacity: 0.8 }]}>
+              Registra tus pensamientos y recibe reflexiones personalizadas
             </Text>
           </View>
-        ) : (
-          <View>
-            <Text style={[GlobalStyles.subtitle, { marginBottom: Spacing.md }]}>
-              📚 Tus reflexiones ({entries.length})
+
+          {/* New Entry Input */}
+          <View style={[GlobalStyles.glassCard, { marginBottom: Spacing.lg }]}>
+            <Text style={[GlobalStyles.inputLabel, { marginBottom: Spacing.sm }]}>
+              ✍️ Nueva entrada
             </Text>
-            {entries.map(renderEntry)}
+            
+            <TextInput
+              value={newEntry}
+              onChangeText={setNewEntry}
+              placeholder="¿Qué está pasando por tu mente hoy?"
+              placeholderTextColor={Colors.textMuted}
+              multiline
+              numberOfLines={4}
+              maxLength={1000}
+              style={[
+                GlobalStyles.input,
+                {
+                  height: 100,
+                  textAlignVertical: 'top',
+                  marginBottom: Spacing.md
+                }
+              ]}
+            />
+            
+            <CustomButton
+              title="Guardar Entrada"
+              onPress={saveEntry}
+              variant="gradient"
+              disabled={!newEntry.trim() || loading}
+              loading={loading}
+              icon="💾"
+            />
           </View>
-        )}
-      </ScrollView>
+
+          {/* Entries List */}
+          {entries.length === 0 ? (
+            <View style={[GlobalStyles.glassCard, { alignItems: 'center', padding: Spacing.xl }]}>
+              <Text style={{ fontSize: 40, marginBottom: Spacing.md }}>📝</Text>
+              <Text style={[GlobalStyles.bodyText, { textAlign: 'center', opacity: 0.8 }]}>
+                Aún no tienes entradas en tu diario.{'\n'}
+                Escribe tu primera reflexión para comenzar tu viaje de autoconocimiento.
+              </Text>
+            </View>
+          ) : (
+            <View>
+              <Text style={[GlobalStyles.subtitle, { marginBottom: Spacing.md }]}>
+                📚 Tus reflexiones ({entries.length})
+              </Text>
+              {entries.map(renderEntry)}
+            </View>
+          )}
+        </ScrollView>
+      </KeyboardAvoidingView>
     </LinearGradient>
   );
 };

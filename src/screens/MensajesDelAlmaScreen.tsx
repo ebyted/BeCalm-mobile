@@ -6,9 +6,12 @@ import {
   Text,
   ScrollView,
   StatusBar,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Components
 import CustomButton from '../components/CustomButton';
@@ -19,8 +22,10 @@ import apiService from '../services/apiService';
 
 // Styles
 import { GlobalStyles, Colors, Gradients, Spacing } from '../styles/theme';
+import { Fonts } from '../styles/typography';
 
 const MensajesDelAlmaScreen: React.FC = () => {
+  const navigation = useNavigation();
   const [currentMessage, setCurrentMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -84,11 +89,15 @@ const MensajesDelAlmaScreen: React.FC = () => {
 
   return (
     <LinearGradient colors={Gradients.background} style={GlobalStyles.container}>
-      <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
-      <View style={{ alignItems: 'center', padding: Spacing.md }}>
-        <Image source={require('../img/icons/icon-mensajes.png')} style={{ width: 80, height: 80, marginBottom: Spacing.sm }} />
-        <Text style={GlobalStyles.title}>Mensajes del Alma</Text>
+      <StatusBar barStyle="dark-content" backgroundColor={Colors.background} />
+
+      <View style={{ padding: Spacing.md, borderBottomWidth: 1, borderBottomColor: Colors.glassBorder, backgroundColor: 'rgba(255,255,255,0.5)' }}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute', left: Spacing.md, top: Spacing.md, zIndex: 1 }}>
+          <Ionicons name="arrow-back" size={28} color={Colors.primaryDark} />
+        </TouchableOpacity>
+        <Text style={[Fonts.h2, { textAlign: 'center' }]}>Mensajes del Alma</Text>
       </View>
+
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{ padding: Spacing.md }}

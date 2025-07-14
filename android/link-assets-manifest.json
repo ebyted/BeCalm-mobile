@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/styles/fonts/rosemarie-italic.otf",
+      "sha1": "7e204bbe210d834edd83dd031b65845848e5fad0"
+    },
+    {
+      "path": "src/styles/fonts/rosemarie.otf",
+      "sha1": "b0604c0c45629d17418a86e39459acd2fa3fa3e1"
+    }
+  ]
+}

@@ -10,7 +10,6 @@ export type OnboardingStackParamList = {
   OnboardingIntention: undefined;
   OnboardingPersonalData: undefined;
   OnboardingAIScreen: { name: string };
-  OnboardingRegister: undefined;
 };
 
 // Main App Tabs

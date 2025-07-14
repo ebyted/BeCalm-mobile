@@ -1,7 +1,7 @@
 // src/screens/onboarding/OnboardingTempleScreen.tsx
 
 import React, { useState } from 'react';
-import { View, Text, SafeAreaView, StatusBar, Alert } from 'react-native';
+import { View, Text, SafeAreaView, StatusBar, Alert, useWindowDimensions } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
 import CustomButton from '../../components/CustomButton';
@@ -23,6 +23,7 @@ const TITLE_COLOR = '#556B2F';
 const OnboardingTempleScreen: React.FC<Props> = ({ navigation }) => {
   const [templeName, setTempleName] = useState('');
   const [loading, setLoading] = useState(false);
+  const { width } = useWindowDimensions();
 
   const handleNext = async () => {
     if (!templeName.trim()) {
@@ -57,6 +58,7 @@ const OnboardingTempleScreen: React.FC<Props> = ({ navigation }) => {
         onChangeText={setTempleName}
         placeholder="Ej: El Jardín Sereno, Mi Refugio Estelar..."
         icon="🏛️"
+        style={{ width: width * 0.9, maxWidth: 500 }}
         />
         <CustomButton
         title="Siguiente"

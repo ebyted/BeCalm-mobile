@@ -25,6 +25,7 @@ import { RootStackParamList, MenuItem } from '../types';
 
 // Styles
 import { GlobalStyles, Colors, Gradients, Spacing } from '../styles/theme';
+import { Fonts } from '../styles/typography';
 
 // Iconos
 import iconDialogo from './assets/icon-dialogo.png';
@@ -108,11 +109,10 @@ const MainMenuScreen: React.FC<Props> = ({ navigation }) => {
         >
           {/* Header */}
           <View style={{ alignItems: 'center', marginTop: Spacing.xl, marginBottom: Spacing.xl }}>
-            <Text style={{ fontSize: 50, marginBottom: Spacing.sm }}>🕊️</Text>
-            <Text style={[GlobalStyles.title, { marginBottom: Spacing.xs }]}>
+            <Text style={[Fonts.h1, { marginBottom: Spacing.xs }]}>
               BeCalm
             </Text>
-            <Text style={[GlobalStyles.bodyText, { textAlign: 'center', opacity: 0.8 }]}>
+            <Text style={[Fonts.body, { textAlign: 'center', opacity: 0.8 }]}>
               Tu santuario digital de paz y bienestar
             </Text>
           </View>
@@ -152,7 +152,8 @@ const MainMenuScreen: React.FC<Props> = ({ navigation }) => {
                   </View>
 
                   {/* Texto con sombra y visibilidad */}
-                  <Text style={[GlobalStyles.menuItemText, {
+                  <Text style={[Fonts.bodyEmphasis, {
+                    flex: 1,
                     color: '#222',
                     textShadowColor: '#fff',
                     textShadowOffset: { width: 1, height: 1 },
